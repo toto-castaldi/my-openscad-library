@@ -1,5 +1,4 @@
-module motorMicroMotorsL149(length) {
-	
+module motorMicroMotorsL149(length) {	
 	difference() {
 		union() {
 			color("grey") cylinder(h = 1, r = 8.5 / 2);
@@ -33,10 +32,6 @@ module motorMicroMotorsL149_4_6_12__10() {
 	motorMicroMotorsL149(36);
 }
 
-$fn = 30;
-motorMicroMotorsL149_4_6_12__10();
-
-length = 36;
 
 
 			
