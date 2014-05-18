@@ -53,12 +53,12 @@ module motorMicroMotorsL149_4_6_12__392() {
 	motorMicroMotorsL149(46);
 }
 
-//test
-//
-//translate(v = [40 * 00, 0, 0]) motorMicroMotorsL149_4_6_12__10();
-//translate(v = [40 * 01, 0, 0]) motorMicroMotorsL149_4_6_12__21();
-//translate(v = [40 * 02, 0, 0]) motorMicroMotorsL149_4_6_12__43();
-//translate(v = [40 * 03, 0, 0]) motorMicroMotorsL149_4_6_12__90();	
-//translate(v = [40 * 04, 0, 0]) motorMicroMotorsL149_4_6_12__188();
-//translate(v = [40 * 05, 0, 0]) motorMicroMotorsL149_4_6_12__392();		
+//examples
+
+translate(v = [40 * 00, 0, 0]) motorMicroMotorsL149_4_6_12__10();
+translate(v = [40 * 01, 0, 0]) motorMicroMotorsL149_4_6_12__21();
+translate(v = [40 * 02, 0, 0]) motorMicroMotorsL149_4_6_12__43();
+translate(v = [40 * 03, 0, 0]) motorMicroMotorsL149_4_6_12__90();	
+translate(v = [40 * 04, 0, 0]) motorMicroMotorsL149_4_6_12__188();
+translate(v = [40 * 05, 0, 0]) motorMicroMotorsL149_4_6_12__392();		
 
