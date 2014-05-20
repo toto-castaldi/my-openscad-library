@@ -1,3 +1,6 @@
+FLU =0.8; // Fundamental Lego Unit
+
+
 // 5 Basic dimensions
 
 hori_pitch=8; //The horizontal pitch, or distance between knobs:  8mm.
@@ -14,7 +17,6 @@ knob_h=1.8; //The height of a knob:  1.8mm
 
 // ###########################################
 
-FLU =0.8; // Fundamental Lego Unit
 
 knob_D=6*FLU; //=4.8mm
 knob_id=3.75*FLU; //=3mm

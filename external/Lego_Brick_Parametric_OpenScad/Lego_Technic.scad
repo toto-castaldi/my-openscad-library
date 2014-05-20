@@ -1,4 +1,4 @@
-include <Lego dimensions.scad>
+include <Lego_dimensions.scad>
 
 smooth=50;
 
