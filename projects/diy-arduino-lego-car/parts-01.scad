@@ -1,13 +1,16 @@
-//use <../../modules/motors/micro-motors-l149.scad>;
+use <../../modules/motors/micro-motors-l149.scad>;
 //use <../../external/Openscad_Lego-Like_brick/block-remix.scad>;
 
-//$fn=30;
+$fn=30;
 
 lego = 1.6;
 
 lego_brick_length = 5 * lego;
 
+lego_brick_width = 6 * lego;
+
 module legoSupport() {
+	
 	union() {
 		difference() {
 			union() {
@@ -28,8 +31,20 @@ module legoSupport() {
 }
 
 
-cube([6 * lego_brick_length, 4 * lego_brick_length, 10]); 
-rotate([90,0,0]) legoSupport();
+cube([6 * lego_brick_length, 4 * lego_brick_length, lego_brick_width * 3]); 
+
+translate([lego_brick_length,8.3,2*lego]) rotate([90,0,0]) legoSupport();
+
+translate([lego_brick_length * 5 ,8.3,2*lego]) rotate([90,0,0]) legoSupport();
+
+translate([lego_brick_length,4 * lego_brick_length - 8.3 ,2*lego]) rotate([-90,0,0]) legoSupport();
+
+translate([lego_brick_length * 5,4 * lego_brick_length - 8.3 ,2*lego]) rotate([-90,0,0]) legoSupport();
+
+motorMicroMotorsL149_4_6_12__10();
+
+
+
 
 
 
