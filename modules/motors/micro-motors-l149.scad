@@ -1,15 +1,17 @@
-module motorMicroMotorsL149(length) {	
+module motorMicroMotorsL149(length, support_length) {
+	inter = 1;	
+	
 	difference() {
 		union() {
-			color("grey") cylinder(h = 1, r = 8.5 / 2);
-			color("grey") translate(v = [0, 0, 1]) cylinder(h = 21, r = 27 / 2);
+			color("grey") cylinder(h = 1 + inter, r = 8.5 / 2);
+			color("grey") translate(v = [0, 0, 1]) cylinder(h = 21 + inter, r = 27 / 2);
 			color("black")
 			intersection() {
 				translate(v = [0, 0, 21 + 1]) cylinder(h = length - 21, r = 27 / 2);
 				translate(v = [0, 0, length - 14]) sphere(19.5);
 			}
 			color("black")
-			translate(v = [0, 0, length + 1]) cylinder(h = 4.5, r = 9 / 2);
+			translate(v = [0, 0, length + 1 - inter]) cylinder(h = 4.5 + inter, r = 9 / 2);
 			intersection() {
 				color("silver")
 				translate(v = [0, 0, length + 5.5]) cylinder(h = 11, r = 4 / 2);
@@ -22,40 +24,48 @@ module motorMicroMotorsL149(length) {
 		}
 		color("silver")
 		translate(v = [- 5 / 2, 1.5, length + 8 - 0.1]) cube([5, 5, 8.5 + 0.2]);
-		color("silver")
-		translate(v = [0, 10, length + 1 - 4])  cylinder(h = 4.1, r = 3/2);
-		color("silver")
-		translate(v = [0, - 10, length + 1 - 4])  cylinder(h = 4.1, r = 3/2);
+		if (support_length <= 0) {
+			color("silver")
+			translate(v = [0, 10, length + 1 - 4])  cylinder(h = 4.1, r = 3/2);
+			color("silver")
+			translate(v = [0, - 10, length + 1 - 4])  cylinder(h = 4.1, r = 3/2);
+		}
+	}
+	if (support_length > 0) {
+			color("silver")
+			translate(v = [0, 10, length + 1 - 4])  cylinder(h = 4.1 + support_length, r = 3/2);
+			color("silver")
+			translate(v = [0, - 10, length + 1 - 4])  cylinder(h = 4.1 + support_length, r = 3/2);
 	}
 }
 
-module motorMicroMotorsL149_4_6_12__10() {
-	motorMicroMotorsL149(36);
+module motorMicroMotorsL149_4_6_12__10(support_length=0) {
+	motorMicroMotorsL149(36,support_length);
 }
 
-module motorMicroMotorsL149_4_6_12__21() {
-	motorMicroMotorsL149(36);
+module motorMicroMotorsL149_4_6_12__21(support_length=0) {
+	motorMicroMotorsL149(36,support_length);
 }
 
-module motorMicroMotorsL149_4_6_12__43() {
-	motorMicroMotorsL149(41);
+module motorMicroMotorsL149_4_6_12__43(support_length=0) {
+	motorMicroMotorsL149(41,support_length);
 }
 
-module motorMicroMotorsL149_4_6_12__90() {
-	motorMicroMotorsL149(41);
+module motorMicroMotorsL149_4_6_12__90(support_length=0) {
+	motorMicroMotorsL149(41,support_length);
 }
 
-module motorMicroMotorsL149_4_6_12__188() {
-	motorMicroMotorsL149(46);
+module motorMicroMotorsL149_4_6_12__188(support_length=0) {
+	motorMicroMotorsL149(46,support_length);
 }
 
-module motorMicroMotorsL149_4_6_12__392() {
-	motorMicroMotorsL149(46);
+module motorMicroMotorsL149_4_6_12__392(support_length=0) {
+	motorMicroMotorsL149(46,support_length);
 }
 
 //examples
 
-translate(v = [40 * 00, 0, 0]) motorMicroMotorsL149_4_6_12__10();
+translate(v = [40 * 00, 0, 0]) motorMicroMotorsL149_4_6_12__10(20);
 translate(v = [40 * 01, 0, 0]) motorMicroMotorsL149_4_6_12__21();
 translate(v = [40 * 02, 0, 0]) motorMicroMotorsL149_4_6_12__43();
 translate(v = [40 * 03, 0, 0]) motorMicroMotorsL149_4_6_12__90();	

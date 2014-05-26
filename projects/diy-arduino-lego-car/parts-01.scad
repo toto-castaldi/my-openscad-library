@@ -1,5 +1,4 @@
 use <../../modules/motors/micro-motors-l149.scad>;
-//use <../../external/Openscad_Lego-Like_brick/block-remix.scad>;
 
 $fn=30;
 
@@ -30,19 +29,29 @@ module legoSupport() {
 	}
 }
 
+shift = 2;
 
-cube([6 * lego_brick_length, 4 * lego_brick_length, lego_brick_width * 3]); 
+difference() {
+	union() {
+		cube([6 * lego_brick_length, 4 * lego_brick_length, lego_brick_width * 3]); 
 
-translate([lego_brick_length,8.3,2*lego]) rotate([90,0,0]) legoSupport();
+		translate([lego_brick_length,8.3,3.5 * lego]) rotate([90,0,0]) legoSupport();
 
-translate([lego_brick_length * 5 ,8.3,2*lego]) rotate([90,0,0]) legoSupport();
+		translate([lego_brick_length * 5 ,8.3,3.5*lego]) rotate([90,0,0]) legoSupport();
 
-translate([lego_brick_length,4 * lego_brick_length - 8.3 ,2*lego]) rotate([-90,0,0]) legoSupport();
+		translate([lego_brick_length,4 * lego_brick_length - 8.3 ,3.5*lego]) rotate([-90,0,0]) legoSupport();
 
-translate([lego_brick_length * 5,4 * lego_brick_length - 8.3 ,2*lego]) rotate([-90,0,0]) legoSupport();
+		translate([lego_brick_length * 5,4 * lego_brick_length - 8.3 ,3.5*lego]) rotate([-90,0,0]) legoSupport();
+	}
+	
+	translate([- shift/2,-shift / 2, 20]) cube([6 * lego_brick_length + shift, shift + 4 * lego_brick_length, lego_brick_width * 3]); 
 
-motorMicroMotorsL149_4_6_12__10();
+	translate([- shift/2 -lego_brick_length * 2,-shift / 2, 10]) cube([6 * lego_brick_length + shift, shift + 4 * lego_brick_length, lego_brick_width * 3]); 
+	
+	translate([8,2 * lego_brick_length,lego_brick_width * 1.5]) rotate([0,90,0]) motorMicroMotorsL149_4_6_12__10(20);
 
+	translate([- shift/2,- shift/2, -3])  cube([6 * lego_brick_length + shift * 2, 4 * lego_brick_length + shift * 2, 5]); 
+}
 
 
 
