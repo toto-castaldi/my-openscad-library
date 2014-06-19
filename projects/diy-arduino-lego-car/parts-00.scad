@@ -8,8 +8,8 @@ module motorMicroMotorsL149LegoAdapter() {
 	thickness = 4;
 
 	difference() {
-		translate([0, 0, -height / 2 ]) cylinder(h= height, r = 4);
-		translate([0, 0, -52.5 - thickness]) motorMicroMotorsL149_4_6_12__10();
+		translate([0, 0, -height / 2 ]) cylinder(h= height, r = 5);
+		translate([0, 0, -52.5 - thickness]) motorMicroMotorsL149_4_6_12__10(0,1);
 		translate([0, 0, thickness]) axle(3);
 	}
 }
