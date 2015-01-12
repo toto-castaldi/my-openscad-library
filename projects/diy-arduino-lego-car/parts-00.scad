@@ -5,14 +5,14 @@ $fn=30;
 
 module motorMicroMotorsL149LegoAdapter() {
 	
-	thickness = 2;
-	height = 8.5 * 2 + thickness;
+	thickness = 3;
+	height = (8.5 * 2 + thickness) -2;
 
-//	difference() {
+	difference() {
 		translate([0, 0, -height / 2 ]) cylinder(h= height, r = 4.5);
-		translate([0, 0, -52.5 - thickness / 2]) motorMicroMotorsL149_4_6_12__10(0,0.1);
+		translate([0, 0, -51.5 - thickness / 2]) motorMicroMotorsL149_4_6_12__10(0,0.1);
 		translate([0, 0, thickness]) axle(3);
-	//}
+	}
 }
 
 
