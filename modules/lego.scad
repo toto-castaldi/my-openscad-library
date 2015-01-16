@@ -108,10 +108,10 @@ module legoSupport(hole = true, knob = true) {
 
 module legoAxle(length = 1) {
 		intersection() {
-			cylinder(h = length * legoHeight, r = 4.8 / 2, center=true);
+			cylinder(h = length * legoWidth, r = 4.8 / 2, center=true);
 			union() {
-				cube([5 , 2, length * legoHeight],center=true);
-				cube([2, 5 ,	length * legoHeight],center=true);
+				cube([5 , 2, length * legoWidth],center=true);
+				cube([2, 5 ,	length * legoWidth],center=true);
 			}
 		}
 }
@@ -133,8 +133,16 @@ translate([xLegoStep(-2.5), yLegoStep(0), zLegoStep(0)]) {
 
 legoAxle(3);
 
-!union() {
+union() {
 		translate([0, 0, zLegoStep(0.5)]) legoBrick(hole = true, knob = true);
 
 	 translate([0, 50, zLegoHole()]) rotate([90, 0, 0]) cylinder(h = 100, r = 0.1);
+}
+
+!union() {
+	translate([0, 0, 0]) legoBrick();
+	translate([xLegoStep(1), 0, 0]) legoBrick();
+	translate([xLegoStep(2), 0, 0]) legoBrick();
+
+	translate([xLegoStep(1), 0, zLegoStep(1.5)]) rotate([0, 90, 0]) legoAxle(3);
 }

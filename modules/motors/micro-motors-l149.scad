@@ -75,5 +75,11 @@ translate(v = [40 * 04, 0, 0]) motorMicroMotorsL149_4_6_12__188();
 translate(v = [40 * 05, 0, 0]) motorMicroMotorsL149_4_6_12__392();		
 
 
+!union () {
+	motorMicroMotorsL149_4_6_12__10();
+	rotate([0, 180, 0]) motorMicroMotorsL149_4_6_12__10();
+}
+
+
 
 
