@@ -1,62 +1,49 @@
 use <../../modules/motors/micro-motors-l149.scad>;
+use <../../modules/lego.scad>;
 
 $fn=30;
 
-lego = 1.6;
+x = 6;
+y = 5;
+z = 3;
 
-lego_brick_length = 5 * lego;
-
-lego_brick_width = 6 * lego;
-
-module _legoSupport() {
-	
-	union() {
-		difference() {
-			union() {
-				translate([0,0,7.9])
-				cylinder (h = 8.5, r = 2.25, $fs = 1);
-				translate([0,0,16.225]) 
-				cylinder (h = .375, r = 2.5, $fs = 1);
+translate([ - xLegoStep(x) / 2 + xLegoStep(0.5), - yLegoStep(y) / 2 + yLegoStep(0.5), - zLegoStep(z) / 2 + zLegoStep(0.5)]) {
+	for (ix = [0:x-1]) {
+		for (iy = [0:y-1]) {
+			for (iz = [0:z-1]) {
+				translate([xLegoStep(ix), yLegoStep(iy), zLegoStep(iz)]) {
+					if (iz == 0 || ix == x -1 ) {
+						if (
+								(ix == 0 && iy == 0 && iz == 0) ||
+								(ix == x -1 && iy == 0 && iz == 0) ||
+								(ix == 0 && iy == y - 1 && iz == 0) ||
+								(ix == x -1 && iy == y - 1 && iz == 0)
+								) {
+							legoSupport(knob = false);
+						} else {
+							if (ix == x - 1 && iy == 2 && iz == z -1 ) {
+								rotate([0, 0, 90]) legoBrick(hole = true, knob = false);
+							} else {
+								if (iz == 0) {
+									legoSupport(hole = false, knob = false);
+								} else {
+									legoBrick(knob = false);
+								}
+							}
+						}
+					}
+				}
 			}
-			translate([0,0,-.05])
-			cylinder (h = 16.7, r = 1.875, $fs = 1);
-			cube([10,1,9], center = true);
-			translate([0,0,16.6])
-			cube([10,1,9], center = true);
 		}
-		translate([0,0,7.9])
-		cylinder(h = .9, r = 3.00, $fs = 1);
 	}
 }
 
-module legoSupport() {
-	translate([0,0,7.9])
-	cylinder (h = 8.5, r = 2.25, $fs = 1);
-	translate([0,0,16.225]) 
-	cylinder (h = .42, r = 2.5, $fs = 1); // h = .375
-	translate([0,0,7.9])
-	cylinder(h = .9, r = 3.00, $fs = 1);
+translate([0, 0, zLegoStep(0.5) + zLegoHole()  ]) { 
+	rotate([0, 90, 0]) {
+		motorMicroMotorsL149_4_6_12__10();
+	}
 }
 
-shift = 2;
 
-difference() {
-	cube([6 * lego_brick_length, 4 * lego_brick_length, lego_brick_width * 4]); 
 
-	translate([lego_brick_length,-8.3,3.5 * lego]) rotate([-90,0,0]) legoSupport();
 
-	translate([lego_brick_length * 5 ,-8.3,3.5*lego]) rotate([-90,0,0]) legoSupport();
-
-	translate([lego_brick_length,4 * lego_brick_length + 8.3 ,3.5*lego]) rotate([90,0,0]) legoSupport();
-
-	translate([lego_brick_length * 5,4 * lego_brick_length + 8.3 ,3.5*lego]) rotate([90,0,0]) legoSupport();
-	
-	translate([- shift/2,-shift / 2, 26]) cube([6 * lego_brick_length + shift, shift + 4 * lego_brick_length, lego_brick_width * 3]); 
-
-	translate([- shift/2 -lego_brick_length * 2,-shift / 2, 10]) cube([6 * lego_brick_length + shift, shift + 4 * lego_brick_length, lego_brick_width * 3]); 
-	
-	translate([8,2 * lego_brick_length,lego_brick_width * 2]) rotate([0,90,0]) motorMicroMotorsL149_4_6_12__10(20);
-
-	translate([- shift/2,- shift/2, -3])  cube([6 * lego_brick_length + shift * 2, 4 * lego_brick_length + shift * 2, 5]); 
-
-}
