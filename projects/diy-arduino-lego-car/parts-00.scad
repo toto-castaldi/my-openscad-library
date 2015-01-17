@@ -1,20 +1,29 @@
 use <../../modules/motors/micro-motors-l149.scad>;
-use <../../external/Openscad_Lego-Like_brick/block-remix.scad>;
+use <../../modules/lego.scad>;
 
 $fn=30;
 
-module motorMicroMotorsL149LegoAdapter() {
-	
-	thickness = 3;
-	height = (8.5 * 2 + thickness) -2;
+x = 9;
+y = 5;
+z = 3;
 
+rotate([0, - 90, 0]) {
 	difference() {
-		translate([0, 0, -height / 2 ]) cylinder(h= height, r = 4.5);
-		translate([0, 0, -51.5 - thickness / 2]) motorMicroMotorsL149_4_6_12__10(0,0.1);
-		translate([0, 0, thickness]) axle(3);
+		translate([11, 0, zLegoStep(0.5) + zLegoHole()  ]) { 
+			rotate([0, 90, 0]) {
+				cylinder(h = 15, r = 4);
+			}
+		}
+
+		translate([xLegoStep(x /2 - .5), 0, zLegoStep(0.5) + zLegoHole()  ]) { 
+			rotate([0, 90, 0]) {
+				legoAxle(3, 0.2);
+			}
+		}
+		translate([ - 9.5, 0, zLegoStep(0.5) + zLegoHole()  ]) { 
+					rotate([0, 90, 0]) {
+						motorMicroMotorsL149_4_6_12__10(0, 0.3);
+			}
+		}
 	}
 }
-
-
-motorMicroMotorsL149LegoAdapter();
-

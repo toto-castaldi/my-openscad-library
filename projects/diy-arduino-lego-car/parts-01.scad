@@ -20,45 +20,47 @@ difference() {
 								(ix == x-1 && iy == y-1)
 							)
 						{
-							legoSupport(hole = true, knob = false);
-						} else {
-							legoSupport(hole = false, knob = false);
+							legoSupport(hole = true, knob = true);
+						} else if (
+								(ix == 1) ||
+								(ix == x - 2 ) ||
+								(iy == 0) ||
+								(iy == y -1 ) 
+							) {
+							legoSupport(hole = false, knob = true);
 						}
 					}
 				}
 			}
-			for (ix = [0:x-1]) {
+
+			
 				for (iy = [0:y-1]) {
-					translate([xLegoStep(ix), yLegoStep(iy), zLegoStep(1)]) {
-							legoBrick(hole = false, knob = false);
-					}
+					translate([xLegoStep(1), yLegoStep(iy), zLegoStep(1)]) {
+					legoBrick(hole = false, knob = true);
 				}
 			}
 
+			translate([xLegoStep(x - 2), yLegoStep(y/2 - 0.5), zLegoStep(1)]) {
+				legoBrick(knob = false);
+			}
 			translate([xLegoStep(x - 1), yLegoStep(y/2 - 0.5), zLegoStep(1)]) {
 				legoBrick(knob = false);
 			}
 			translate([xLegoStep(x - 1), yLegoStep(y/2 - 0.5), zLegoStep(2)]) {
 				rotate([0, 0, 90]) {
-					legoBrick(knob = false, hole = true);
+					legoBrick(knob = true, hole = true);
 				}
 			}
 
 		}
 
-		translate([xLegoStep(x /2 - .5), 0, zLegoStep(0.5) + zLegoHole()  ]) { 
-			rotate([0, 90, 0]) {
-				legoAxle(3);
-			}
-		}
-
-		translate([2.25 + 0.1, 0, zLegoStep(1)  ]) { 
-			cube([2, yLegoStep(y), 20], center = true);
+		translate([2.25 + 0.1, 0, 5  ]) { 
+			cube([2, yLegoStep(y), 25], center = true);
 		}
 	}
 	translate([ - 9.5, 0, zLegoStep(0.5) + zLegoHole()  ]) { 
 			rotate([0, 90, 0]) {
-				motorMicroMotorsL149_4_6_12__10();
+				motorMicroMotorsL149_4_6_12__10(20, 0.5);
 			}
-		}
+	}
 }
