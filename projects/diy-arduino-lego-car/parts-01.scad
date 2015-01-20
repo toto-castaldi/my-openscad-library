@@ -10,39 +10,28 @@ z = 3;
 difference() {
 	union() {
 		translate([ - xLegoStep(x) / 2 + xLegoStep(0.5), - yLegoStep(y) / 2 + yLegoStep(0.5), - zLegoStep(z) / 2 + zLegoStep(0.5)]) {
-			for (ix = [0:x-1]) {
-				for (iy = [0:y-1]) {
-					translate([xLegoStep(ix), yLegoStep(iy), 0]) {
-						if (
-								(ix == 0 && iy == 0) ||
-								(ix == x-1 && iy == 0) ||
-								(ix == 0 && iy == y-1) ||
-								(ix == x-1 && iy == y-1)
-							)
-						{
-							legoSupport(hole = true, knob = true);
-						} else if (
-								(ix == 1) ||
-								(ix == x - 2 ) ||
-								(iy == 0) ||
-								(iy == y -1 ) 
-							) {
-							legoSupport(hole = false, knob = true);
-						}
-					}
-				}
+
+			for (iy = [0:1]) {
+				translate([xLegoStep(1), yLegoStep(iy * (y - 1)), 0 ]) legoSupport(); 
+				translate([xLegoStep(2.5), yLegoStep(iy * (y - 1)), 0]) legoSupport(hole = true, step = 2); 
+				translate([xLegoStep(4), yLegoStep(iy * (y - 1)), 0]) legoSupport(); 
+				translate([xLegoStep(5), yLegoStep(iy * (y - 1)), 0]) legoSupport(); 
+				translate([xLegoStep(6.5), yLegoStep(iy * (y - 1)), 0]) legoSupport(hole = true, step = 2); 
 			}
 
 			
-				for (iy = [0:y-1]) {
-					translate([xLegoStep(1), yLegoStep(iy), zLegoStep(1)]) {
-					legoBrick(hole = false, knob = true);
+			for (iy = [0:y-1]) {
+				translate([xLegoStep(1), yLegoStep(iy), zLegoStep(1)]) {
+					legoBrick();
+				}
+				translate([xLegoStep(1), yLegoStep(iy), 0]) {
+					legoSupport();
+				}
+				translate([xLegoStep(x-1), yLegoStep(iy), 0]) {
+					legoSupport();
 				}
 			}
 
-			translate([xLegoStep(x - 2), yLegoStep(y/2 - 0.5), zLegoStep(1)]) {
-				legoBrick(knob = false);
-			}
 			translate([xLegoStep(x - 1), yLegoStep(y/2 - 0.5), zLegoStep(1)]) {
 				legoBrick(knob = false);
 			}

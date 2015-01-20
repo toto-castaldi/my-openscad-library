@@ -14,69 +14,57 @@ function yLegoStep(step) = step * legoWidth;
 function zLegoStep(step) = step * legoHeight; 
 function zLegoHole() = 5.8; 
 
-module legoBrick(hole = false, knob = true) {
+module hole(istep = 0, step = 1) {
+	translate([(istep + 0.5 )* legoWidth - legoWidth / 2 * (step - 1 ), 0, zLegoHole() - legoHeight / 2]) {
+		rotate([90, 0, 0]) {
+			translate([ 0, 0, - (legoWidth - 0.9 * 2) / 2 ]) {
+				cylinder(h = enlargeFrontBack(legoWidth - 0.9 * 2), r= 4.9 / 2 );
+			}
+			
+			translate([ 0, 0, (legoWidth - 0.9 * 2) / 2]) {
+				cylinder(h = enlargeFrontBack(0.9), r= 6.2 / 2 );
+			}
+			translate([ 0, 0, - (legoWidth - 0.9 * 2) / 2 - enlarge(0.9)]) {
+				cylinder(h = enlargeFrontBack(0.9), r= 6.2 / 2 );
+			}
+		}
+	}
+
+}
+
+module legoBrick(hole = false, knob = true, step = 1, height = legoHeight) {
 		difference() {
 			union() {
-				cube ([ legoWidth, legoWidth, legoHeight], center = true);
+				if (height < legoHeight) {
+					translate([- legoWidth * step / 2, - legoWidth / 2, legoHeight - height - legoHeight / 2 ]) {
+						cube([legoWidth * step, legoWidth, height]);
+					}
+				} else {
+					cube([legoWidth * step, legoWidth, height], center = true);
+				}
 				if (knob) {
-					translate([ 0, 0 ,  legoHeight / 2]) {
-						cylinder(h = 1.7, r = 5/2, center = true);
+					for (istep = [0:step -1]) {
+						translate([ (istep + 0.5 )* legoWidth - legoWidth / 2 * step, 0 ,  legoHeight / 2]) {
+							cylinder(h = 1.7, r = 5/2);
+						}
 					}
 				}
 			}
 			if (hole) {
-				translate([0, 0, zLegoHole() - legoHeight / 2]) {
-					rotate([90, 0, 0]) {
-						translate([ 0, 0, - (legoWidth - 0.9 * 2) / 2 ]) {
-							cylinder(h = enlargeFrontBack(legoWidth - 0.9 * 2), r= 4.9 / 2 );
-						}
-						
-						translate([ 0, 0, (legoWidth - 0.9 * 2) / 2]) {
-							cylinder(h = enlargeFrontBack(0.9), r= 6.2 / 2 );
-						}
-						translate([ 0, 0, - (legoWidth - 0.9 * 2) / 2 - enlarge(0.9)]) {
-							cylinder(h = enlargeFrontBack(0.9), r= 6.2 / 2 );
-						}
+				if (step > 1) {
+					for (istep = [0: step - 2 ]) {
+						hole(istep, step);
 					}
+				} else {
+					hole (0, 2);
 				}
 			}
 		}
 	
 }
 
-module legoSupport(hole = true, knob = true) {
-	translate([0, 0, 2.5 / 2]) {
-		assign (legoHeight = legoHeight - 2.5) {
-			difference() {
-				union() {
-					translate([ - legoWidth / 2, - legoWidth / 2, - legoHeight / 2]) {
-						cube ([ legoWidth, legoWidth, legoHeight]);
-					}
-					if (knob) {
-						translate([ 0, 0 ,  legoHeight / 2]) {
-							cylinder(h = 1.7, r = 5/2);
-						}
-					}
-				}
-				if (hole) {
-					translate([0, 0, 0]) {
-						rotate([90, 0, 0]) {
-							translate([ 0, 0, - (legoWidth - 0.9 * 2) / 2 ]) {
-								cylinder(h = enlargeFrontBack(legoWidth - 0.9 * 2), r= 4.9 / 2 );
-							}
-							
-							translate([ 0, 0, (legoWidth - 0.9 * 2) / 2]) {
-								cylinder(h = enlargeFrontBack(0.9), r= 6.2 / 2 );
-							}
-							translate([ 0, 0, - (legoWidth - 0.9 * 2) / 2 - enlarge(0.9)]) {
-								cylinder(h = enlargeFrontBack(0.9), r= 6.2 / 2 );
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+module legoSupport(hole = false, knob = true, step = 1) {
+	legoBrick(hole = hole, knob = knob, step = step, height = legoHeight - 2.3 );
 }
 
 module legoAxle(length = 1, tollerance = 0) {
@@ -89,9 +77,13 @@ module legoAxle(length = 1, tollerance = 0) {
 		}
 }
 
+
+
+// examples
 translate([xLegoStep(2.5), yLegoStep(0), zLegoStep(0)]) {
 	legoBrick(hole = true, knob = false);
 }
+
 translate([xLegoStep(1), yLegoStep(0), zLegoStep(0)]) {
 	legoBrick(hole = true);
 }
@@ -112,10 +104,19 @@ union() {
 	 translate([0, 50, zLegoHole()]) rotate([90, 0, 0]) cylinder(h = 100, r = 0.1);
 }
 
-!union() {
+union() {
 	translate([0, 0, 0]) legoBrick();
 	translate([xLegoStep(1), 0, 0]) legoBrick();
 	translate([xLegoStep(2), 0, 0]) legoBrick();
 
 	translate([xLegoStep(1), 0, zLegoStep(1.5)]) rotate([0, 90, 0]) legoAxle(3);
+}
+
+!union() {
+		for (i = [0:5]) {
+			translate([0, 0, zLegoStep(i * 1.5)]) legoBrick(step = i + 1, hole = true);
+		}
+		for (i = [0:5]) {
+			translate([xLegoStep(5 + 2), 0, zLegoStep(i * 1.5)]) legoSupport(step = i + 1, hole = true);
+		}
 }
