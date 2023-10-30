@@ -11,6 +11,6 @@ Modules :
 
 ## Spiral Napki Ring
 
-![spiral example](spiral-napkin-ring.png "Title")
+![spiral example](spiral-napkin-ring.png)
 
 
